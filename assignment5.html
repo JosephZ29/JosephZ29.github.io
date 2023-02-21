@@ -12,47 +12,81 @@
     <body> 
 
         <div class="header">
-            <h1>Joseph Zhang's Assignment 4!</h1>
+            <h1>Joseph Zhang's Assignment 5!</h1>
             <p>
-            <img src="HW4_cal.jpeg" width=400></a>
+            <img src="HW5_cal.jpeg" width=400></a>
             </p>
             <p>
-            The above is the calculation process of choosing resistor. I chose 1kΩ resistors for the display, 
+            The above is the calculation process to show the circuit is safe. , 
             </p>
             <p>
-            so that the current would not be larger than 20mA.
-            </p>
-            <p>
-            <img src="Skematic.jpeg" width=400></a>
+            <img src="HW5_Schematics.jpeg" width=400></a>
             </p>
             <p>
             Here are the schematics of the circuit! It will show the people
             </p>
             <p>
-            how they can use remote control to send and display the values.
+            how they can use remote control to change the speed levels of fans.
             </p>
             <p>
-            <img src="hw4_gif.gif" width=400></a>
+            <img src="HW5gif.gif" width=400></a>
             </p>
             <p>
-            Here is the HW 4 GIF!
+            Here is the HW 5 GIF!
             </p>
             <p>
             If you want to learn about how I made this by Arduino, please find the code below!
             </p>
-            <p>
-            <img src="HW4_1.png" width=400></a>
-            </p>
-            <p>
-            <img src="HW4_2.png" width=400></a>
-            </p>
-            <p>
-            <img src="HW4_3.png" width=400></a>
-            </p>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
         <pre><code class="Arduino">
+#include <IRremote.h>
 
+const byte RECV_PIN = 8; // connect IR receiver to pin 8
+IRrecv irrecv(RECV_PIN); // initialize the IR receiver
+decode_results results; // define the variable to get the results from IR receiver
+int motorControl = 9; // connect the transistor to pin 9
+int level = 6;
+
+void setup(){
+  Serial.begin(9600); // initialize the serial for printing values
+  // enable IR to receive values
+  irrecv.enableIRIn();
+  irrecv.blink13(true);
+  // initialize the IR receiver with accepting values from pin 12 and lighting
+  irrecv.begin(RECV_PIN, ENABLE_LED_FEEDBACK); 
+  pinMode(motorControl, OUTPUT); 
+}
+
+void loop(){
+  // when the IR receiver receives the signal
+  if (irrecv.decode()){ 
+    // print out the undecoded values      
+    Serial.println(irrecv.decodedIRData.command);
+    // swith the raw values to the number from remote control
+    switch(irrecv.decodedIRData.command){
+      case 22: // swith 22 to 0          
+      analogWrite(motorControl, 0);
+      break;
+      case 12: // swith 12 to 1
+      analogWrite(motorControl, 70);
+      break;
+      case 24: // swith 24 to 2
+      analogWrite(motorControl, 130);
+      break;
+      case 94: // swith 94 to 3
+      analogWrite(motorControl, 180);
+      break;
+      case 8: // swith 8 to 4
+      analogWrite(motorControl, 200);
+      break ;  
+      case 28: // swith 28 to 5
+      analogWrite(motorControl, 255);
+      break ;               
+    }
+    irrecv.resume(); // resume to receieve new values
+  }
+ }
         <code><pre>
         <script>hljs.highlightAll();</script>
     </body>
