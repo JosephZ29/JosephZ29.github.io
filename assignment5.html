@@ -37,13 +37,10 @@
             <p>
             If you want to learn about how I made this by Arduino, please find the code below!
             </p>
-            <p>
-            #include <IRremote.h>
-            </p>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
         <pre><code class="Arduino">
-            
+            #include &lt;IRremote.h&gt;
             const byte RECV_PIN = 8; // connect IR receiver to pin 8
             IRrecv irrecv(RECV_PIN); // initialize the IR receiver
             decode_results results; // define the variable to get the results from IR receiver
