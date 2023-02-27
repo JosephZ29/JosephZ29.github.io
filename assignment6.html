@@ -41,17 +41,20 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
         <pre><code class="Arduino">
             void setup() {
-              // put your setup code here, to run once:
+              // setup the pin 7 for detecting current go through left button
               pinMode(7, INPUT);
+              // setup the pin 8 for detecting current go through left button
               pinMode(8, INPUT);
               Serial.setTimeout(10); // set the timeout for parseInt
+              // setup the pin 6 for LED
               pinMode(6, OUTPUT);
               Serial.begin(9600);
             }
 
             void loop() {
-              // put your main code here, to run repeatedly:
+              // set the read value from pin 7 
               int left = digitalRead(7);
+              // set the read value from pin 8
               int right = digitalRead(8);
               if (Serial.available() > 0) {   // if there's serial data 
                 int inByte = Serial.read(); // read it
@@ -59,21 +62,21 @@
                 analogWrite(6, inByte);	// use it to set the LED brightness
              }
 
-              if (left == 1) {
-                Serial.println(1);
+              if (left == 1) { // if the left button is pressed
+                Serial.println(1); // print out 1
               }
-              if (right == 1) {
-                Serial.println(2);
+              if (right == 1) { // if the right button is pressed
+                Serial.println(2); // print out 2
               } 
-              if (left == 0 && right == 0) {
-                Serial.println(0);
+              if (left == 0 && right == 0) { // if no button is pressed
+                Serial.println(0); // print out 0
               }
-              delay(50);
+              delay(50); // pause for 50 ms
             }
         <code><pre>
-        <p>
+        <div class="header"><p>
         I also use javascript for this project, here is the javascript code.
-        </p>
+        </p></div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
         <pre><code class="Javascript">
             var serial; // variable to hold an instance of the serialport library
