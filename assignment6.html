@@ -1,0 +1,189 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+        <title>Joseph Zhang's HCDE 439 Physical Computing Page!</title> 
+
+        <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
+
+    </head> 
+    <body> 
+
+        <div class="header">
+            <h1>Joseph Zhang's Assignment 6!</h1>
+            <p>
+            <img src="6_cal.jpeg" width=400></a>
+            </p>
+            <p>
+            The above is the calculation process to show the circuit is safe.
+            </p>
+            <p>
+            <img src="6_chematic.jpeg" width=400></a>
+            </p>
+            <p>
+            Here are the schematics of the circuit! It will show the people
+            </p>
+            <p>
+            how they can use buttons to change the mode and use keys to change LED brightness.
+            </p>
+            <p>
+            <img src="6_gif.gif" width=400></a>
+            </p>
+            <p>
+            Here is the HW 6 GIF!
+            </p>
+            <p>
+            If you want to learn about how I made this by Arduino, please find the Arduino code below!
+            </p>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+        <pre><code class="Arduino">
+            void setup() {
+              // put your setup code here, to run once:
+              pinMode(7, INPUT);
+              pinMode(8, INPUT);
+              Serial.setTimeout(10); // set the timeout for parseInt
+              pinMode(6, OUTPUT);
+              Serial.begin(9600);
+            }
+
+            void loop() {
+              // put your main code here, to run repeatedly:
+              int left = digitalRead(7);
+              int right = digitalRead(8);
+              if (Serial.available() > 0) {   // if there's serial data 
+                int inByte = Serial.read(); // read it
+                Serial.write(inByte);  	// send it back out as raw binary data
+                analogWrite(6, inByte);	// use it to set the LED brightness
+             }
+
+              if (left == 1) {
+                Serial.println(1);
+              }
+              if (right == 1) {
+                Serial.println(2);
+              } 
+              if (left == 0 && right == 0) {
+                Serial.println(0);
+              }
+              delay(50);
+            }
+        <code><pre>
+        <p>
+        I also use javascript for this project, here is the javascript code.
+        </p>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+        <pre><code class="Javascript">
+            var serial; // variable to hold an instance of the serialport library
+            var portName = '/dev/cu.usbmodem142101'; //rename to the name of your port
+            var datain; //some data coming in over serial!
+            var xPos = 0; // horizontal position
+            var key; // the keys users press
+
+            function setup() {
+              serial = new p5.SerialPort();       // make a new instance of the serialport library
+              serial.on('list', printList);       // set a callback function for the serialport list event
+              serial.on('connected', serverConnected); // callback for connecting to the server
+              serial.on('open', portOpen);        // callback for the port opening
+              serial.on('data', serialEvent);     // callback for when new data arrives
+              serial.on('error', serialError);    // callback for errors
+              serial.on('close', portClose);      // callback for the port closing
+
+              serial.list();                      // list the serial ports
+              serial.open(portName);              // open a serial port
+              createCanvas(1200, 800);
+              background(0x08, 0x16, 0x40);
+            }
+
+            // get the list of ports:
+            function printList(portList) {
+             // portList is an array of serial port names
+             for (var i = 0; i < portList.length; i++) {
+             // Display the list the console:
+               print(i + " " + portList[i]);
+             }
+            }
+
+            function serverConnected() {
+              print('connected to server.');
+            }
+
+            function portOpen() {
+              print('the serial port opened.');
+            }
+
+            function serialError(err) {
+              //print('Something went wrong with the serial port. ' + err);
+              print(err);
+            }
+
+            function portClose() {
+              print('The serial port closed.');
+            }
+
+            function serialEvent() {
+              if (serial.available()) {
+                let maybeNumber = parseInt(serial.readLine());
+                if (!isNaN(maybeNumber)) {
+                    datain = maybeNumber;
+                    console.log(datain);
+                }
+              }
+            }
+
+            function keyPressed() {
+              //console.log("writing key");
+              serial.write(key);
+            }
+
+            function graphData(newData) {
+              // map the range of the input to the window height:
+              var yPos = map(newData, 0, 255, 0, height);
+              // draw the line in a pretty color:
+              stroke(255, 0, 80);
+              line(xPos, height, xPos, height - yPos);
+              // at the edge of the screen, go back to the beginning:
+              if (xPos >= width) {
+                xPos = 0;
+                // clear the screen by resetting the background:
+                background(0x08, 0x16, 0x40);
+              } else {
+                // increment the horizontal position for the next reading:
+                xPos++;
+              }
+            }
+
+
+            function draw() {
+              // set the background color as gray
+              background(200);
+              // set the font color on home screen as white
+              fill(255);
+              // if the user press the left button
+              if (datain == 1) {
+                // set the background color as black
+                background(0);
+                // set the font color as white
+                fill(255);
+                // tell the users which mode are they in
+                text("This the dard mode", 30, 30);
+              // if the user press the right button
+              } else if (datain == 2) {
+                // set the background color as white
+                background(255);
+                // set the font color as black
+                fill(0);
+                // tell the users which mode are they in
+                text("This the light mode", 30, 30);
+              // if the users do nothin
+              } else {
+                // remind them that they can do such actions
+                text("Please press the button to choose a mode you like", 30, 30);
+                text("Left button for dark mode, and right for light", 30, 50);
+              }
+            }
+        <code><pre>
+    </body>
+</html>
