@@ -1,0 +1,92 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+        <title>Joseph Zhang's HCDE 439 Physical Computing Page!</title> 
+
+        <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
+
+    </head> 
+    <body> 
+
+        <div class="header">
+            <h1>Joseph Zhang's Final Project!</h1>
+            <p>
+            <img src="6_cal.jpeg" width=400></a>
+            </p>
+            <p>
+            The above is the calculation process to show the circuit is safe.
+            </p>
+            <p>
+            <img src="6_schematic.jpeg" width=400></a>
+            </p>
+            <p>
+            Here are the schematics of the circuit! It will show the people
+            </p>
+            <p>
+            how they can use buttons to change the mode and use keys to change LED brightness.
+            </p>
+            <p>
+            <img src="6_gif.gif" width=400></a>
+            </p>
+            <p>
+            Here is the HW 6 GIF!
+            </p>
+            <p>
+            If you want to learn about how I made this by Arduino, please find the Arduino code below!
+            </p>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+        <pre><code class="Arduino">
+            #include <LiquidCrystal.h>
+
+            #define analogPin  A0 //the thermistor attach to 
+            #define beta 3950 //the beta of the thermistor
+            #define resistance 10 //the value of the pull-down resistor
+            float tempC, tempF; // make two variables to store the values of temperature
+            LiquidCrystal lcd(12, 11, 5, 4, 3, 2); // connect the lcd to those pins
+
+            void setup() {
+              lcd.begin(16, 2); // initialize the lcd, this time I want it display two lines
+              pinMode(6, OUTPUT); // set this output to control the motor fan
+            }
+
+            void loop() {
+              long a = analogRead(analogPin); // read the voltage of the resistor
+              a = map(a, 0, 1023, -55, 114); // map the read value to centigrade temperature
+              //the calculating formula of temperature
+              tempC = a;
+              tempF = 1.8*tempC + 32.0; //convert centigrade to Fahrenheit
+              lcd.setCursor(0, 0); // set the first line, display from the left most
+              lcd.print("TempC= "); // display "TempC= "
+              lcd.print(tempC); // display the centigrade temperature
+              lcd.setCursor(0, 1); // set the second line, display from the left most
+              lcd.print("TempF= "); // display "TempF= "
+              lcd.print(tempF); // display the Fahrenheit temperature
+              delay(1000); // wait for 1000 ms  
+              // when the temperature is higher than 35 centigrade
+              // the red LED turns on
+              // else, it will not
+              if (tempC >= 35.0) {
+                analogWrite(13, 255);
+              } else {
+                analogWrite(13, 0);
+              }
+              // when the temperature is higher than 30 degrees centigrade
+              // but less than 35 degrees centigrade
+              // the motor fan on as the slow speed
+              // if the temperature if higher than 35 degrese centigrade
+              // set the speed as high speed
+              if (tempC >= 35.0) {
+                analogWrite(6, 50);
+              } else if (tempC >= 30.0 && tempC < 35.0) {
+                analogWrite(6, 100);
+              } else {
+                analogWrite(6, 255);    
+              }        
+            }
+        <code><pre>
+    </body>
+</html>
