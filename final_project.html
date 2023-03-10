@@ -13,33 +13,22 @@
 
         <div class="header">
             <h1>Joseph Zhang's Final Project!</h1>
-            <p>
-            <img src="6_cal.jpeg" width=400></a>
-            </p>
-            <p>
-            The above is the calculation process to show the circuit is safe.
-            </p>
-            <p>
-            <img src="6_schematic.jpeg" width=400></a>
-            </p>
-            <p>
-            Here are the schematics of the circuit! It will show the people
-            </p>
-            <p>
-            how they can use buttons to change the mode and use keys to change LED brightness.
-            </p>
-            <p>
-            <img src="6_gif.gif" width=400></a>
-            </p>
-            <p>
-            Here is the HW 6 GIF!
-            </p>
+            <h2>Concept</h2>
+            <p>For this project I made a computer CPU cooling system, which can report the current CPU temperature in both centigrade and Farenhait, and it can also starts the cooling fan with different speed levels if the temperature is getting so high. After the teperature is over the dangerous threshold, the warning light will be turned on.</p>
+            <h2>Demo Video</h2>
+            <a href="https://www.youtube.com/watch?v=NFGIm9veJMw">https://www.youtube.com/watch?v=NFGIm9veJMw</a>
+            <h2>Technical Writeup</h2>
+            <p>These are all the materials I used: Arduino board, breadboard, LCD, thermistor, 1kΩ resistors, capacitor, motor fan, transister, LED, 9V battery, diode, potentiometer.</p>
+            <img src="final_work.jpeg" width=400></a>
+            <p>Below are my schematics. I used a 1kΩ resistor for the red LED. According to the computation, (5V - 1.8V) / 1kΩ < 30mA, so the LED is safe. I picked a 1kΩ resistor for the LCD display to limit current through the backlight.</p>
+            <img src="final_schematics.jpeg" width=400></a>
+            <h2>Code</h2>
             <p>
             If you want to learn about how I made this by Arduino, please find the Arduino code below!
             </p>
-        </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-        <pre><code class="Arduino">
+            </div>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+            <pre><code class="Arduino">
             #include <LiquidCrystal.h>
 
             #define analogPin  A0 //the thermistor attach to 
