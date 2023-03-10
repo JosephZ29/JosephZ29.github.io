@@ -22,6 +22,9 @@
             <img src="final_work.jpeg" width=400></a>
             <p>Below are my schematics. I used a 1kΩ resistor for the red LED. According to the computation, (5V - 1.8V) / 1kΩ < 30mA, so the LED is safe. I picked a 1kΩ resistor for the LCD display to limit current through the backlight.</p>
             <img src="final_schematics.jpeg" width=400></a>
+            <h2>Circuit Tutorial</h2>
+            <p>Here is the tutorial to teach you how to make your own cooling system. Firstly, you may need to use a thermistor and a 1kΩ resistor to make a voltage divder to help you measure the voltage value. Then we can convert that value to human readable temperature by using mathematical computations in the Arduino code below. We also need a transistor to limit the current from the battery. To make sure the random electromagnetic noise from the motor will not affec the LCD, we need to connect a capacitor in parallel with the motor fan. The diode here is to prevent the fly-back issue, otherwise it would be a heating system.</p>
+            <img src="final_circuit.jpeg" width=400></a>
             <h2>Code</h2>
             <p>
             If you want to learn about how I made this by Arduino, please find the Arduino code below!
